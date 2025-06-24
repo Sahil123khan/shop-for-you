@@ -5,6 +5,7 @@ import Home from '../pages/Home'
 import About from '../pages/About'
 import Blogs from '../pages/Blogs'
 import Detaile from '../pages/Detaile'
+import SingleProduct from './SingleProduct'
 
 
 const Dashboard =()=> {
@@ -16,6 +17,7 @@ const Dashboard =()=> {
         <Route path="/about" element={<About />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/detaile" element={<Detaile />} />
+        <Route path='/product/:id' element={<SingleProduct/>}/>
      </Routes>
     </BrowserRouter>
   )

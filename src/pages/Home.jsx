@@ -10,8 +10,6 @@ const API = "https://fakestoreapi.com/products";
 const getApiData = async () => {
  try {
   const res = await axios.get(API)
-  console.log('apidata',res.data);
-
   setapidata(res.data);
   
  } catch (error) {
