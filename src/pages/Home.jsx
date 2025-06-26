@@ -26,7 +26,7 @@ useEffect(()=>{
 
 
   return (
-    <div className="flex flex-wrap justify-center items-start">
+    <div className="flex flex-wrap justify-center items-start ">
       {
         apidata.map((currentelm)=>{
           return(
