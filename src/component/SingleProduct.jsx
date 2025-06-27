@@ -7,7 +7,7 @@ const SingleProduct = () => {
     const [error, setError] = useState(null);
     const { id } = useParams();
 
-    const SingleProductApi = `https://fakestoreapi.com/products/${id}`
+    const SingleProductApi = `http://localhost:3000/products/${id}`
 
    const GetSingleProduct = async () => {
     try {

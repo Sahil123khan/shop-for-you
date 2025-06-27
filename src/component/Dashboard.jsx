@@ -1,12 +1,11 @@
 import React from 'react'
 import { BrowserRouter,Routes,Route, Link } from 'react-router-dom'
-import Navbar from './navbar'
+import Navbar from './Navbar'
 import Home from '../pages/Home'
 import About from '../pages/About'
 import Blogs from '../pages/Blogs'
 import Detaile from '../pages/Detaile'
 import SingleProduct from './SingleProduct'
-import AddNewProduct from './AddNewProduct'
 
 
 const Dashboard =()=> {
@@ -19,7 +18,6 @@ const Dashboard =()=> {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/detaile" element={<Detaile />} />
         <Route path='/product/:id' element={<SingleProduct/>}/>
-        <Route path='/newProduct' element={<AddNewProduct/>} />
      </Routes>
     </BrowserRouter>
   )
