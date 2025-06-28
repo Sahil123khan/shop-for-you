@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { FaTrash } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 
 const SingleProduct = () => {
@@ -27,6 +28,8 @@ const SingleProduct = () => {
    useEffect(()=>{
     GetSingleProduct();
    },[id])
+
+ 
 
     
   return (
@@ -57,6 +60,7 @@ const SingleProduct = () => {
             <div className="flex justify-center items-center">
               <span className="text-xl font-semibold text-green-600">₹{singleprod.price}</span>
             </div>
+           
           </>
         )}
       </div>

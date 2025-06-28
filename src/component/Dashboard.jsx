@@ -7,7 +7,6 @@ import Blogs from '../pages/Blogs'
 import Detaile from '../pages/Detaile'
 import SingleProduct from './SingleProduct'
 
-
 const Dashboard =()=> {
   return (
     <BrowserRouter>

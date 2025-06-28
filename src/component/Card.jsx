@@ -25,6 +25,9 @@ const Card = ({getdata}) => {
         <h5>{`Price = ₹${getdata.price}`}</h5>
       </div>
       </Link>
+      
+      {/* Delete Button */}
+   
     </div>
     
   )

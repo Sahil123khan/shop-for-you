@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import { FaCartFlatbedSuitcase, FaProductHunt} from "react-icons/fa6";
 import AddNewProduct from './AddNewProduct';
 
-
-
 const Navbar =()=> {
   const[modelopen,setmodelclose]=useState(false)
 
@@ -31,6 +29,5 @@ const Navbar =()=> {
       </nav>
     )
   }
-
 
 export default Navbar
