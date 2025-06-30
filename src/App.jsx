@@ -1,12 +1,14 @@
 import Dashboard from './component/Dashboard'
+import { HomeProvider } from './context/HomeProvider'
 import './App.css'
 
 function App() {
 
   return (
     <>
-    <Dashboard />
-     
+      <HomeProvider>
+        <Dashboard />
+      </HomeProvider>
     </>
   )
 }

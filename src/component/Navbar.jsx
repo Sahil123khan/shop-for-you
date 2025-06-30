@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaCartFlatbedSuitcase, FaProductHunt} from "react-icons/fa6";
 import AddNewProduct from './AddNewProduct';
+import { MdDeleteSweep } from "react-icons/md";
+
+
 
 const Navbar =()=> {
   const[modelopen,setmodelclose]=useState(false)
@@ -24,6 +27,12 @@ const Navbar =()=> {
 
           Add
         </button>
+       <Link to="/delete-product">
+       <button>
+            <MdDeleteSweep size={30}/>
+        </button>
+       </Link>
+      
       
         {modelopen &&  <AddNewProduct modelclose={setmodelclose}/> }
       </nav>
