@@ -1,4 +1,3 @@
-// src/context/HomeContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -21,6 +20,17 @@ export const HomeProvider = ({ children }) => {
     setisloading(false);
   };
 
+  const deleteProductFromApi = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/products/${id}`);
+      setapidata(prev => prev.filter(product => product.id !== id));
+      return true;
+    } catch (error) {
+      console.error("Delete error", error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     getApiData();
 
@@ -36,11 +46,14 @@ export const HomeProvider = ({ children }) => {
   }, []);
 
   return (
-    <HomeContext.Provider value={{ apidata, isloading }}>
+    <HomeContext.Provider value={{
+      isloading,
+      apidata,
+      deleteProductFromApi,
+    }}>
       {children}
     </HomeContext.Provider>
   );
 };
 
-// Custom hook
 export const useHome = () => useContext(HomeContext);
