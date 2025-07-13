@@ -7,7 +7,7 @@ const Card = ({ getdata, onProductUpdate }) => {
   const location = useLocation();
 
   return (
-    <div className="w-70 h-85  m-4 rounded shadow-sm flex flex-col items-center  justify-between p-4 ">
+    <div className="w-70 h-85 m-4 rounded shadow-sm flex flex-col items-center justify-between p-4 hover:shadow-lg hover:bg-slate-200  ">
       {location.pathname !== "/delete-product" && (
         <div className="w-full flex justify-end">
           <button

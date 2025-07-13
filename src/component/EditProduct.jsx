@@ -21,9 +21,6 @@ const EditProduct = ({ modelclose, oldvalue, onProductUpdate }) => {
     if (!inputvalue.price) newErrors.price = "Price is required";
     else if (isNaN(inputvalue.price) || Number(inputvalue.price) <= 0)
       newErrors.price = "Price must be a positive number";
-    if (!inputvalue.image.trim()) newErrors.image = "Image URL is required";
-    else if (!/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i.test(inputvalue.image.trim()))
-      newErrors.image = "Enter a valid image URL (jpg, png, webp, gif)";
     return newErrors;
   };
 
@@ -50,13 +47,14 @@ const EditProduct = ({ modelclose, oldvalue, onProductUpdate }) => {
     }
     setIsSubmitting(false);
     modelclose(false);
+    window.location.reload();
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-black opacity-50 backdrop-blur-sm inset-0 absolute"></div>
 
-      <div className="relative bg-white rounded-2xl p-4 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-2">
+      <div className="relative bg-white rounded-2xl p-4 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-2 animate-modal">
         <div className="flex justify-end">
           <button
             onClick={() => modelclose(false)}
@@ -116,7 +114,6 @@ const EditProduct = ({ modelclose, oldvalue, onProductUpdate }) => {
             className="border-2 border-gray-300 p-2 rounded-md w-full"
             placeholder="Update Image URL"
           />
-          {errors.image && <span className="text-red-500 text-xs">{errors.image}</span>}
 
           <button
             disabled={isSubmitting}

@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, {  useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
+import 'animate.css';
+
 
 const AddNewProduct = ({ modelclose }) => {
   const[ischange,setischange]=useState({
@@ -79,10 +81,10 @@ const AddNewProduct = ({ modelclose }) => {
 
   
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="absolute inset-0 bg-black opacity-30 backdrop-blur-sm"></div>
+    <div className="fixed inset-0 flex items-center justify-center z-50 ">
+      <div className="absolute inset-0 bg-black opacity-30 backdrop-blur-sm "></div>
 
-      <div className="relative w-2xl max-w-lg rounded-2xl bg-white z-10 p-4">
+      <div className="relative w-2xl max-w-lg rounded-2xl bg-white z-10 p-4 animate__animated animate__backInDown">
         <div className=" border-2 border-gray-300 py-2 rounded-2xl ">
         <div className="flex justify-end  p-1">
           <button
@@ -154,7 +156,7 @@ const AddNewProduct = ({ modelclose }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`rounded px-4 py-2 mt-2 ${
+              className={`rounded px-4 py-2 mt-2  ${
                 isSubmitting 
                   ? 'bg-gray-400 cursor-not-allowed' 
                   : 'bg-blue-500 hover:bg-blue-600'
