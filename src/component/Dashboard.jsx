@@ -7,6 +7,7 @@ import Blogs from '../pages/Blogs'
 import Detaile from '../pages/Detaile'
 import SingleProduct from './SingleProduct'
 import DeleteProduct from './DeleteProduct'
+import AddNewProduct from './AddNewProduct'
 import { Footer } from './Footer'
 
 const Dashboard =()=> {
@@ -20,6 +21,7 @@ const Dashboard =()=> {
         <Route path="/detaile" element={<Detaile />} />
         <Route path='/product/:id' element={<SingleProduct/>}/>
         <Route path='/delete-product' element={<DeleteProduct/>}/>
+        <Route path='/add-product' element={<AddNewProduct modelclose={() => window.history.back()} />}/>
      </Routes>
      <Footer/>
     </BrowserRouter>
