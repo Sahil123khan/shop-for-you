@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Card from "../component/Card";
 import { useHome } from "../context/HomeProvider";
-import axios from "axios";
 
 const Home = () => {
   const { isloading, apidata } = useHome();
-  const [products, setProducts] = useState([]);
-
-  // Fetch products function
-  const fetchProducts = async () => {
-    const res = await axios.get("http://localhost:3000/products");
-    setProducts(res.data);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   return (
     <div className="flex flex-wrap justify-center items-start ">
@@ -29,7 +17,6 @@ const Home = () => {
             <Card
               key={currentelm.id}
               getdata={currentelm}
-              onProductUpdate={fetchProducts}
             />
           );
         })

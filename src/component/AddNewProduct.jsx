@@ -1,28 +1,28 @@
-import axios from "axios";
-import React, {  useState } from "react";
+import React, { useState, useContext } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
+import { FirebaseContext } from "../context/Firebase";
 import 'animate.css';
 
-
 const AddNewProduct = ({ modelclose }) => {
-  const[ischange,setischange]=useState({
-    title:"",
-    description:"",
-    price:"",
-    image:"",
-
+  const [ischange, setischange] = useState({
+    title: "",
+    description: "",
+    price: "",
+    image: "",
+    category: "electronics",
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { AddAllProductFirebase } = useContext(FirebaseContext);
 
-  const ontypechange=(e)=>{
-    const {name,value} = e.target;
-    setischange({...ischange,[name]: value});
+  const ontypechange = (e) => {
+    const { name, value } = e.target;
+    setischange({ ...ischange, [name]: value });
     
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors({...errors, [name]: ""});
+      setErrors({ ...errors, [name]: "" });
     }
   }
 
@@ -51,7 +51,7 @@ const AddNewProduct = ({ modelclose }) => {
     return Object.keys(newErrors).length === 0;
   }
 
-  const postapicall =async (e) => {
+  const postapicall = async (e) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -60,26 +60,31 @@ const AddNewProduct = ({ modelclose }) => {
     
     setIsSubmitting(true);
     
-   try {
-    const postapi = `http://localhost:3000/products`
-    await axios.post(postapi,ischange)
-    
-    // Dispatch custom event to notify that a product was added
-    window.dispatchEvent(new Event('productAdded'));
-    
-    modelclose(false)
-  
-   } catch (error) {
-    console.log("error",error);
-    
-    
-   } finally {
-    setIsSubmitting(false);
-   };
-   
+    try {
+      // Convert price to number
+      const productData = {
+        ...ischange,
+        price: parseFloat(ischange.price),
+        rating: {
+          rate: 0,
+          count: 0
+        }
+      };
+      
+      await AddAllProductFirebase(productData);
+      
+      // Dispatch custom event to notify that a product was added
+      window.dispatchEvent(new Event('productAdded'));
+      
+      modelclose(false);
+    } catch (error) {
+      console.log("error", error);
+      setErrors({ submit: "Failed to add product. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    };
   }
 
-  
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 ">
       <div className="absolute inset-0 bg-black opacity-30 backdrop-blur-sm "></div>

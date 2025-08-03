@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import { GetAllData, DeleteProductFirebase } from './Firebase';
 
 const HomeContext = createContext();
 
@@ -7,13 +7,11 @@ export const HomeProvider = ({ children }) => {
   const [apidata, setapidata] = useState([]);
   const [isloading, setisloading] = useState(false);
 
-  const API = "http://localhost:3000/products";
-
-  const getApiData = async () => {
+  const getFirebaseData = async () => {
     setisloading(true);
     try {
-      const res = await axios.get(API);
-      setapidata(res.data);
+      const data = await GetAllData();
+      setapidata(data);
     } catch (error) {
       console.log("error", error);
     }
@@ -22,7 +20,8 @@ export const HomeProvider = ({ children }) => {
 
   const deleteProductFromApi = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/products/${id}`);
+      await DeleteProductFirebase(id);
+      // Update local state after successful deletion
       setapidata(prev => prev.filter(product => product.id !== id));
       return true;
     } catch (error) {
@@ -32,10 +31,10 @@ export const HomeProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getApiData();
+    getFirebaseData();
 
     const handleProductAdded = () => {
-      getApiData();
+      getFirebaseData();
     };
 
     window.addEventListener('productAdded', handleProductAdded);

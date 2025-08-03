@@ -1,8 +1,7 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { MdTipsAndUpdates } from "react-icons/md";
-
+import { FirebaseContext } from "../context/Firebase";
 
 const EditProduct = ({ modelclose, oldvalue, onProductUpdate }) => {
   const [inputvalue, setinputvalue] = useState({
@@ -13,6 +12,19 @@ const EditProduct = ({ modelclose, oldvalue, onProductUpdate }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+  const { UpdateProductFirebase } = useContext(FirebaseContext);
+
+  // Set initial values when oldvalue changes
+  useEffect(() => {
+    if (oldvalue) {
+      setinputvalue({
+        title: oldvalue.title || "",
+        description: oldvalue.description || "",
+        price: oldvalue.price || "",
+        image: oldvalue.image || "",
+      });
+    }
+  }, [oldvalue]);
 
   const validate = () => {
     const newErrors = {};
@@ -39,15 +51,25 @@ const EditProduct = ({ modelclose, oldvalue, onProductUpdate }) => {
     }
     setIsSubmitting(true);
     try {
-      const updateapi = `http://localhost:3000/products/${oldvalue.id}`;
-      const res = await axios.put(updateapi, inputvalue);
+      const updateData = {
+        ...inputvalue,
+        price: parseFloat(inputvalue.price)
+      };
+      
+      await UpdateProductFirebase(oldvalue.id, updateData);
+      
       if (onProductUpdate) onProductUpdate();
+      
+      // Dispatch custom event to notify that a product was updated
+      window.dispatchEvent(new Event('productAdded'));
+      
+      modelclose(false);
     } catch (error) {
       console.log("error", error);
+      setErrors({ submit: "Failed to update product. Please try again." });
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
-    modelclose(false);
-    window.location.reload();
   };
 
   return (
@@ -115,12 +137,14 @@ const EditProduct = ({ modelclose, oldvalue, onProductUpdate }) => {
             placeholder="Update Image URL"
           />
 
+          {errors.submit && <span className="text-red-500 text-xs">{errors.submit}</span>}
+
           <button
             disabled={isSubmitting}
             type="submit"
-            className="bg-blue-400 py-2 rounded-md text-white font-semibold mt-2 w-full"
+            className="bg-blue-400 py-2 rounded-md text-white font-semibold mt-2 w-full disabled:opacity-50"
           >
-            Update Data
+            {isSubmitting ? "Updating..." : "Update Data"}
           </button>
         </form>
       </div>

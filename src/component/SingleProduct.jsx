@@ -1,41 +1,42 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
+import { FirebaseContext } from '../context/Firebase';
 
 const SingleProduct = () => {
-    const [singleprod,setsingleprod] = useState({});
+    const [singleprod, setsingleprod] = useState({});
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
+    const { GetSingleProduct } = useContext(FirebaseContext);
 
-    const SingleProductApi = `http://localhost:3000/products/${id}`
-
-   const GetSingleProduct = async () => {
+   const fetchSingleProduct = async () => {
+    setIsLoading(true);
     try {
-        const res = await axios.get(SingleProductApi)
-        setsingleprod(res.data)
-        setError(null)
-        console.log('res>>>>>>.',res.data);
-
-        
+        const productData = await GetSingleProduct(id);
+        setsingleprod(productData);
+        setError(null);
+        console.log('Product data:', productData);
     } catch (error) {
-        setError('Product details could not be loaded. Please try again later.')
-        console.log('error',error);
-        
+        setError('Product details could not be loaded. Please try again later.');
+        console.log('error', error);
+    } finally {
+        setIsLoading(false);
     }
    }
 
-   useEffect(()=>{
-    GetSingleProduct();
-   },[id])
+   useEffect(() => {
+    fetchSingleProduct();
+   }, [id]);
 
- 
-
-    
   return (
     <div className="flex justify-center min-h-screen w-full bg-gray-100">
       <div className="bg-white w-full md:w-[70%] h-2/4  mt-7 mx-3 flex flex-col rounded-lg p-4 md:p-8">
-        {error ? (
+        {isLoading ? (
+          <div className="text-center py-10 text-xl font-semibold text-gray-500">
+            Loading....
+          </div>
+        ) : error ? (
           <div className="text-red-500 text-center mb-4">{error}</div>
         ) : (
           <>
@@ -60,7 +61,6 @@ const SingleProduct = () => {
             <div className="flex justify-center items-center">
               <span className="text-xl font-semibold text-green-600">₹{singleprod.price}</span>
             </div>
-           
           </>
         )}
       </div>

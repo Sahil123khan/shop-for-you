@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import EditProduct from "./EditProduct";
+import AllProducts from "./AllProductsFirebase";
 
 const Card = ({ getdata, onProductUpdate }) => {
   const [model, setModel] = useState(false);
@@ -39,6 +40,7 @@ const Card = ({ getdata, onProductUpdate }) => {
             </button>
 
             <h5>{`Price = ₹${getdata.price}`}</h5>
+           
           </div>
         </Link>
       ) : (
